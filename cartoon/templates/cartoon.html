@@ -28,18 +28,26 @@
   </style>
   <body>
     <!-- Navbar -->
-    <nav class="navbar bg-primary-subtle navbar-expand-lg">
+    <nav class="navbar bg-primary-subtle navbar-expand-lg border border-black">
       <div class="container-fluid d-flex justify-content-evenly">
-        <div class="container-fluid d-flex justify-content-start align-items-center">
+        <div
+          class="container-fluid d-flex justify-content-start align-items-center"
+        >
           <i class="fa-brands fa-python fa-2xl pt-0"></i>
           <p class="fw-bold fs-4 pt-2">Tubes Citra Digital</p>
         </div>
 
         <div class="navbar-collapse collapse d-flex align-items-start">
           <ul class="navbar-nav">
-            <li class="nav-item ">
-              <a class="icon-link icon-link-hover link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" style="--bs-icon-link-transform: translate3d(0, -.125rem, 0);" href="{% url 'home:home_page' %}">
-                <i class="fa-solid fa-right-to-bracket bi" aria-hidden="true"><use xlink:href="#clipboard"></use></i>
+            <li class="nav-item">
+              <a
+                class="icon-link icon-link-hover link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+                style="--bs-icon-link-transform: translate3d(0, -0.125rem, 0)"
+                href="{% url 'home:home_page' %}"
+              >
+                <i class="fa-solid fa-right-to-bracket bi" aria-hidden="true"
+                  ><use xlink:href="#clipboard"></use
+                ></i>
                 Home
               </a>
             </li>
@@ -50,38 +58,100 @@
 
     <main>
       <!-- From file-->
-      <form action="/" class="validate container-fluid d-flex justify-content-center flex-column" enctype="multipart/form-data">
+      <form
+        id="cartoon-form"
+        action="{% url 'cartoon:cartoon_result' %}"
+        method="post"
+        class="validate container-fluid d-flex justify-content-center flex-column"
+        enctype="multipart/form-data"
+      >
+        {% csrf_token %}
         <p class="fs-1 fw-bold text-center">Turning an image into a cartoon.</p>
-      <div class="custom-file mb-3">
-        <div>
-          <label for="formFileLg" class="form-label border-primary"></label>
-          <input class="form-control form-control-lg border-primary" id="formFileLg" type="file" name="file_cartoon" required>
+        <div class="custom-file mb-3">
+          <div>
+            <label for="formFileLg" class="form-label border-primary"></label>
+            <input
+              class="form-control form-control-lg border-primary"
+              id="formFileLg"
+              type="file"
+              name="file_cartoon"
+              required
+            />
+          </div>
         </div>
-      </div>
-      <button class="btn btn-outline-primary mx-auto" type="submit">Convert</button>
-    </form>
+        <button
+          class="btn btn-outline-primary mx-auto"
+          type="submit"
+          value="Submit"
+        >
+          Convert
+        </button>
+      </form>
 
-      <!-- Display Hasil -->
+      <!-- Display Hasil cartoon -->
       <div class="container-fluid">
         <div class="card-body">
+          {% if cartoon_result %}
           <div>
-            <img src="" alt="">
+            <img  id="cartoon-result" src="{{ cartoon_result.url }}" alt="Cartoon Result" />
           </div>
+          {% endif %}
         </div>
       </div>
     </main>
 
-
     <footer class="">
       <!-- Copyright -->
-      <div class="text-center p-3" style="background-color: rgba(28, 27, 27, 0.05);">
+      <div
+        class="text-center p-3"
+        style="background-color: rgba(28, 27, 27, 0.05)"
+      >
         © 2023 Copyright:
-        <a class="text-body" href="https://www.youtube.com/watch?v=HIcSWuKMwOw" target="_blank">Click this link.</a>
+        <a
+          class="text-body"
+          href="https://www.youtube.com/watch?v=HIcSWuKMwOw"
+          target="_blank"
+          >Click this link.</a
+        >
       </div>
       <!-- Copyright -->
     </footer>
 
+    <!-- Script JQuery  -->
+    <script>
+      $(document).ready(function () {
+        $("#cartoon-form").submit(function (e) {
+          e.preventDefault();
+
+          var formData = new FormData(this);
+
+          $.ajax({
+            type: "POST",
+            url: '{% url "cartoon:cartoon_result" %}',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+              if ("image" in data) {
+                // Update the source of the result image
+                $("#cartoon-result").attr(
+                  "src",
+                  "data:image/jpeg;base64," + data.image
+                );
+              } else {
+                console.error("Error processing image:", data.error);
+              }
+            },
+            error: function (error) {
+              console.error("Error:", error);
+            },
+          });
+        });
+      });
+    </script>
+    
     <!-- Script CDN-->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
