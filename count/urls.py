@@ -3,13 +3,11 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
-
-app_name = 'home'
+app_name = 'count'
 
 # URLConf
 urlpatterns = [
-  # path('test/', views.hello),
-  path('home/', views.index, name='home_page')
+  path('count/', views.count, name='count_page')
 ]
 
 if settings.DEBUG:
