@@ -1,4 +1,7 @@
 from django import forms
+from .models import CartoonImage
 
-class CartoonImageForm(forms.Form):
-    file_cartoon = forms.ImageField()
+class CartoonImageForm(forms.ModelForm):
+    class Meta:
+        model = CartoonImage
+        fields = ['image_upload']

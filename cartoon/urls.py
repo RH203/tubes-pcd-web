@@ -1,16 +1,17 @@
-from django.urls import path
-from . import views
+# cartoon/urls.py
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import cartoon
+from django.urls import path
+from .views import cartoon, image
 
 app_name = 'cartoon'
 
-# URLConf
 urlpatterns = [
-  path('cartoon/', views.cartoon, name='cartoon_page'),
-  path('cartoon/result', cartoon, name='cartoon_result')
+    path('cartoon/', cartoon, name='cartoon_page'),
+    path('result/', image, name='cartoon_result')
 ]
 
+## MEDIA
 if settings.DEBUG:
-  urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    

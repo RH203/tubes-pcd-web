@@ -58,6 +58,7 @@
 
     <main>
       <!-- From file-->
+      <!-- {% url 'cartoon:cartoon_result' %} -->
       <form
         id="cartoon-form"
         action="{% url 'cartoon:cartoon_result' %}"
@@ -74,7 +75,7 @@
               class="form-control form-control-lg border-primary"
               id="formFileLg"
               type="file"
-              name="file_cartoon"
+              name="image_upload"
               required
             />
           </div>
@@ -82,7 +83,6 @@
         <button
           class="btn btn-outline-primary mx-auto"
           type="submit"
-          value="Submit"
         >
           Convert
         </button>
@@ -91,11 +91,16 @@
       <!-- Display Hasil cartoon -->
       <div class="container-fluid">
         <div class="card-body">
-          {% if cartoon_result %}
-          <div>
-            <img  id="cartoon-result" src="{{ cartoon_result.url }}" alt="Cartoon Result" />
+          <div id="cartoon-result-container">
+            <img
+              id="cartoon-result"
+              alt="Cartoon Result"
+              src=""
+            />
+            {% if error_message %}
+            <p>{{ error_message }}</p>
+            {% endif %}
           </div>
-          {% endif %}
         </div>
       </div>
     </main>
@@ -117,39 +122,6 @@
       <!-- Copyright -->
     </footer>
 
-    <!-- Script JQuery  -->
-    <script>
-      $(document).ready(function () {
-        $("#cartoon-form").submit(function (e) {
-          e.preventDefault();
-
-          var formData = new FormData(this);
-
-          $.ajax({
-            type: "POST",
-            url: '{% url "cartoon:cartoon_result" %}',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-              if ("image" in data) {
-                // Update the source of the result image
-                $("#cartoon-result").attr(
-                  "src",
-                  "data:image/jpeg;base64," + data.image
-                );
-              } else {
-                console.error("Error processing image:", data.error);
-              }
-            },
-            error: function (error) {
-              console.error("Error:", error);
-            },
-          });
-        });
-      });
-    </script>
-    
     <!-- Script CDN-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script

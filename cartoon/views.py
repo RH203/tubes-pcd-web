@@ -1,24 +1,20 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.http import HttpResponseServerError, HttpResponse
 from .forms import CartoonImageForm
-from .cartoon_conversion import caart
+import cv2
+import numpy as np
+from django.http import JsonResponse
 
-# # Create your views here.
+def cartoon (request):
+  return render(request, 'cartoon/cartoon.html')
 
-# # def hello (request):
-# #   return HttpResponse("Hello World")
+def image (request):
+  if request.method == 'POST':
+    form = CartoonImageForm(request.POST, request.FILES)
 
-# # def cartoon (request):
-# #   template = loader.get_template('cartoon.html')
-# #   return HttpResponse(template.render())
-# #   # return render(request, 'cartoon.html')
-
-def cartoon(request):
-    cartoon_result = None
-    if request.method == 'POST':
-        form = CartoonImageForm(request.POST, request.FILES)
-        if form.is_valid():
-            image_file = form.cleaned_data['file_cartoon']
-            cartoon_result = caart(image_file)
-    print(cartoon_result)  # Check the value in the console
+    if form.is_valid ():
+      form.save()
+      print("Success")
+  else:
     form = CartoonImageForm()
-    return render(request, 'cartoon.html', {'form': form, 'cartoon_result': cartoon_result})
+  return render(request, 'cartoon/cartoon.html', {'form': CartoonImageForm()})
