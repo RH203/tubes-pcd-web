@@ -9,4 +9,4 @@ from django.template import Context, loader
 def index (request):
   # template = loader.get_template('index.html')
   # return HttpResponse(template.render())
-  return render(request, 'index.html')
+  return render(request, 'home/index.html')

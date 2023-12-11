@@ -9,8 +9,9 @@ app_name = 'home'
 # URLConf
 urlpatterns = [
   # path('test/', views.hello),
-  path('home/', views.index, name='home_page')
+  path('', views.index, name='home_page')
 ]
 
+# Static
 if settings.DEBUG:
   urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
