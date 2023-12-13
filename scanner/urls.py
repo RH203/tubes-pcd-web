@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from .views import scanner, save_image
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -7,8 +7,9 @@ app_name = 'scanner'
 
 # URLConf
 urlpatterns = [
-  path('scanner/', views.scanner, name='scanner_page')
+  path('scanner/', scanner, name='scanner_page'),
+  path('result/', save_image, name="scanner_result")
 ]
 
 if settings.DEBUG:
-  urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
