@@ -47,7 +47,53 @@
     </nav>
 
     <main>
-      
+      <!-- From file-->
+      <!-- {% url 'cartoon:cartoon_result' %}, Ubah action disini menjadi app dan urls pada setiap APP-->
+      <form
+        id="cartoon-form"
+        action="{% url 'scanner:scanner_result' %}"
+        method="post"
+        class="validate container-fluid d-flex justify-content-center flex-column gap-3"
+        enctype="multipart/form-data"
+      >
+        {% csrf_token %}
+        <p class="fs-1 fw-bold text-center">Scanner document:</p>
+
+        <!-- Title image  input-->
+        <div class="input-group mb-3">
+          <span class="input-group-text border-primary fs-3 fw-semibold" id="basic-addon1"><i class="fa-solid fa-images"></i></span>
+          <input name="title" type="text" class="form-control border-primary fs-3 fw-semibold" placeholder="Title image" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        
+
+        <!--  File image input-->
+        <div class="input-group">
+          <input name="image_upload" type="file" class="form-control border-primary fs-3 fw-semibold" id="inputGroupFile02">
+          <label class="input-group-text border-primary fs-3 fw-semibold" for="inputGroupFile02">Upload</label>
+        </div>
+        <button
+          class="btn btn-outline-primary mx-auto"
+          type="submit"
+        >
+          Convert
+        </button>
+      </form>
+
+      <!-- Display Hasil cartoon -->
+      <div class="container-fluid">
+        <div class="card-body">
+          <div id="cartoon-result-container">
+            <img
+              id="cartoon-result"
+              alt="Cartoon Result"
+              src=""
+            />
+            {% if error_message %}
+            <p>{{ error_message }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
     </main>
 
 
