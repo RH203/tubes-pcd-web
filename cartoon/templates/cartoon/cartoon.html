@@ -89,23 +89,24 @@
         </button>
       </form>
 
-      <!-- Display Hasil cartoon -->
-      <div class="container-fluid">
-        <div class="card-body">
-          <div id="cartoon-result-container">
-            <img
-              id="cartoon-result"
-              alt="Cartoon Result"
-              src=""
-            />
-            {% if error_message %}
-            <p>{{ error_message }}</p>
-            {% endif %}
-          </div>
-        </div>
+    <!-- Bagian untuk menampilkan hasil pemindaian -->
+    <div class="container-fluid flex-column d-flex">
+      <div class="card-body">
+        {% if request.session.cartoon_result %}
+        <form action="{% url 'cartoon:cartoon_reset' %}" method="post">
+          {% csrf_token %}
+          <p class="fs-1 fw-bold text-center">Cartoon Results:
+            <button type="submit" class="btn btn-outline-primary mx-auto">Reset image</button>
+          </p>
+        </form>
+        <img class="img-fluid" src="data:image/jpg;base64, {{ request.session.cartoon_result }}"
+          alt="Convert Result" style="margin: auto;"/>
+        {% else %}
+        <p class="fs-1 fw-bold text-center">No image results available.</p>
+        {% endif %}
       </div>
-    </main>
-
+    </div>
+  </main>
 
     <footer class="">
       <!-- Copyright -->

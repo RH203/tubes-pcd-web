@@ -5,8 +5,6 @@ from PIL import Image
 from django.conf import settings
 from .forms import ScannerImageForm
 from django import forms
-import os
-import io
 import base64
 
 class Helpers:

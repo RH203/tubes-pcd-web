@@ -48,8 +48,6 @@
   </nav>
 
   <main>
-    <!-- From file-->
-    <!-- {% url 'cartoon:cartoon_result' %}, Ubah action disini menjadi app dan urls pada setiap APP-->
     <form id="scanner-form" action="{% url 'scanner:scanner_result' %}" method="post"
       class="validate container-fluid d-flex justify-content-center flex-column gap-3" enctype="multipart/form-data">
       {% csrf_token %}
