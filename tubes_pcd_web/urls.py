@@ -22,5 +22,5 @@ urlpatterns = [
     path('', include('home.urls')),
     path('', include('scanner.urls')),
     path('', include('cartoon.urls')),
-    path('', include('count.urls')),
+    path('', include('money.urls'))
 ]
