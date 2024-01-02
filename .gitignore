@@ -302,3 +302,8 @@ GitHub.sublime-settings
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+
+
+.cartoon/image
+.money/image
+.scanner/image
