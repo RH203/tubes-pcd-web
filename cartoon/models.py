@@ -16,3 +16,9 @@ def cartoon_image_upload_path(instance, filename):
 class CartoonImage (models.Model):
     title = models.CharField(max_length=255)
     image_upload = models.ImageField(upload_to=cartoon_image_upload_path, blank=True, null=True)
+    created_at = models.DateTimeField(default=timezone.now)
+
+
+    # untuk representasi teks yang jelas dari objek cartoon
+    def __str__(self):
+        return self.title
