@@ -1,11 +1,10 @@
 import cv2
 import numpy as np
+# from astype import pandas
 from PIL import Image
 from django.conf import settings
 from .forms import ScannerImageForm
 from django import forms
-import os
-import io
 import base64
 
 class Helpers:
@@ -78,10 +77,12 @@ def scan_document(image_path, request):
     cnts = Helpers.grab_contours(cnts)
     cnts = sorted(cnts, key=cv2.contourArea, reverse=True)[:5]
 
+    screenCnt = None
+
     for c in cnts:
         peri = cv2.arcLength(c, True)
         approx = cv2.approxPolyDP(c, 0.02 * peri, True)
-        if len(approx) == 4:
+        if len(approx) == 4: #4
             screenCnt = approx
             break
 

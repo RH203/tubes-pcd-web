@@ -3,6 +3,6 @@ This repository was created to fulfill the final project of the digital image pr
 
 
 # Progress project
-![Progress]( https://progress-bar.dev/23/?title=Progress)
+![Progress]( https://progress-bar.dev/100/?title=Progress)
 
  
