@@ -304,6 +304,6 @@ GitHub.sublime-settings
 .history
 
 
-.cartoon/image/
-.money/image/
-.scanner/image/
+./cartoon/image/
+./money/image/
+./scanner/image/
